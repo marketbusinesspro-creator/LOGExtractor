@@ -1,0 +1,39 @@
+name: Build and Publish Windows Executables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0.x'  # Change this to the version you are using
+
+    - name: Build LOGExtractor
+      run: |
+        dotnet publish LOGExtractor/LOGExtractor.csproj -c Release -r win-x64 --self-contained -o out/LOGExtractor
+
+    - name: Build MapViewer
+      run: |
+        dotnet publish MapViewer/MapViewer.csproj -c Release -r win-x64 --self-contained -o out/MapViewer
+
+    - name: Build ImageScan
+      run: |
+        dotnet publish ImageScan/ImageScan.csproj -c Release -r win-x64 --self-contained -o out/ImageScan
+
+    - name: Build CharacterSpriteExtractor
+      run: |
+        dotnet publish CharacterSpriteExtractor/CharacterSpriteExtractor.csproj -c Release -r win-x64 --self-contained -o out/CharacterSpriteExtractor
+
+    - name: Upload Executables
+      uses: actions/upload-artifact@v2
+      with:
+        name: executables
+        path: out/
