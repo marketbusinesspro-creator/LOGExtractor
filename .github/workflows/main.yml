@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -33,7 +33,7 @@ jobs:
         dotnet publish CharacterSpriteExtractor/CharacterSpriteExtractor.csproj -c Release -r win-x64 --self-contained -o out/CharacterSpriteExtractor
 
     - name: Upload Executables
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: executables
         path: out/
